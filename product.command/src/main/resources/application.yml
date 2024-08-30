@@ -1,0 +1,19 @@
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:test1
+    username: jinho
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create
+  kafka:
+    bootstrap-servers: 192.168.0.12:9092
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+      group-id: serious
+      auto-offset-reset: earliest
+server:
+  port: 9091

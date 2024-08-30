@@ -1,0 +1,24 @@
+# CQRS : Command\uC640 Query DB\uAC00 \uB530\uB85C \uC874\uC7AC
+# Command and Query Responsibility Segregation
+# \uBA85\uB839(CUD)\uC640 \uCFFC\uB9AC(R)\uB97C \uB098\uB220 \uAD6C\uC131\uD574\uB77C
+# \uBA85\uB839\uC744 \uBE44\uB3D9\uAE30\uC801\uC73C\uB85C \uD050\uC5D0 \uC313\uC544\uC11C \uC9C4\uD589
+# \uCFFC\uB9AC\uB294 \uC808\uB300 DB\uB97C \uC218\uC815\uD558\uC9C0 \uC54A\uC74C, DTO \uB9CC \uBC18\uD658
+# \uC7A5\uC810 : \uC77D\uAE30 \uC11C\uBC84\uB97C scale up \uD558\uAE30 \uC27D\uB2E4.
+# cud\uC5D0 \uC791\uC5C5\uC744 \uBE44\uB3D9\uC801\uC73C\uB85C \uD558\uAE30\uC5D0 \uB3D9\uC2DC\uC131 \uCC98\uB9AC\uAC00 \uC26C\uC6CC\uC9C4\uB2E4.
+# client\uAC00 gateway\uB97C \uD1B5\uD574 \uC694\uCCAD\uC744 \uD558\uBA74 command server\uB85C \uB4E4\uC5B4\uAC04 \uB2E4\uC74C, \uBA54\uC138\uC9C0 \uD050 \uC2DC\uC2A4\uD15C\uC778 kafka\uB97C \uAC70\uCCD0 read server\uB85C \uAC04 \uD6C4
+# \uACB0\uACFC\uAC00 gateway\uB97C \uB2E4\uC2DC \uAC70\uCCD0 client\uC5D0\uAC8C \uAC00\uAC8C \uB41C\uB2E4.
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: query_product
+          uri: http://localhost:9090
+          predicates:
+            - Path=/api/v1/products/**
+            - Method=GET
+        - id: command_product
+          uri: http://localhost:9091
+          predicates:
+            - Path=/api/v1/products/**
+            - Method=POST,OPTIONS,PUT,DELETE
